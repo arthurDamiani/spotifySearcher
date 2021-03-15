@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Box = styled.div`
-    background-color: #f0f0f0;
+    background-color: #fbfbfb;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,11 @@ const Box = styled.div`
     align-items: center;
     border-radius: 8px;
     margin: 1rem;
+    transition: all ease 0.3s;
+
+    &:hover {
+        transform: scale(1.05);
+    }
 `
 
 const Image = styled.img`
