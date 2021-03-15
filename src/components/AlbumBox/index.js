@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
 const Box = styled.div`
-    background-color: #fefefe;
+    background-color: #f0f0f0;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 8px;
+    margin: 1rem;
 `
 
 const Image = styled.img`
@@ -14,10 +16,26 @@ const Image = styled.img`
     height: 15rem;
 `
 
+const Title = styled.h2`
+    color: ${({ theme }) => theme.colors.black};
+`
+
+const InfoContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+`
+
 function AlbumBox({name, artistName, image, link, totalTracks}) {
     return (
         <Box>
             <Image src={image} />
+            <Title>{name}</Title>
+            <InfoContainer>
+                <p>Artista: {artistName}</p>
+                <p>Número de músicas: {totalTracks}</p>
+            </InfoContainer>
+            <a href={link}>Para acessar esse álbum no spotify clique aqui!</a>
         </Box>
     )
 }

@@ -8,7 +8,6 @@ import Cookies from 'js-cookie'
 const ContentContainer = styled.div`
     height: 100vh;
     display: grid;
-    grid-template-rows: 50% 50%;
     grid-template-columns: 50% 50%;
     margin: 1rem;
 `
@@ -24,6 +23,7 @@ function NewReleases() {
             await api.get('/v1/browse/new-releases')
                 .then((res) => {
                     setResults(res.data.albums.items)
+                    localStorage.setItem('token', token)
                 })
                 .catch(() => alert('Erro na requisição!'))
         }

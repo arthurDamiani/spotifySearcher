@@ -15,7 +15,6 @@ export default function Home() {
         redirectUri='http://localhost:3000/newReleases'
         clientID='9af444e6d96e4c69b00c1652503c083a'
         scopes={[Scopes.userReadPrivate, Scopes.userReadEmail]}
-        onAccessToken={(token) => {localStorage.setItem('token', token)}}
       />
     </Center>
   )
