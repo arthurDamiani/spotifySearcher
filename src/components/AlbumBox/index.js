@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 
 const Box = styled.div`
-    background-color: #fbfbfb;
+    background-color: #f5f5f5;
     padding: 1rem;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     border-radius: 8px;
     margin: 1rem;
     transition: all ease 0.3s;
@@ -17,8 +16,8 @@ const Box = styled.div`
 `
 
 const Image = styled.img`
-    width: 15rem;
-    height: 15rem;
+    width: auto;
+    height: 10rem;
 `
 
 const Title = styled.h2`
@@ -28,19 +27,30 @@ const Title = styled.h2`
 const InfoContainer = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 1rem;
+`
+
+const MiddleInfoContainer = styled.div`
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
 `
 
 function AlbumBox({name, artistName, image, link, totalTracks}) {
     return (
         <Box>
             <Image src={image} />
-            <Title>{name}</Title>
             <InfoContainer>
-                <p>Artista: {artistName}</p>
-                <p>Número de músicas: {totalTracks}</p>
+                <Title>{name}</Title>
+                <MiddleInfoContainer>
+                    <p>Artista: {artistName}</p>
+                    <p>Número de faixas: {totalTracks}</p>
+                </MiddleInfoContainer>
+                <a href={link}>Para acessar esse álbum no spotify clique aqui!</a>
             </InfoContainer>
-            <a href={link}>Para acessar esse álbum no spotify clique aqui!</a>
         </Box>
     )
 }
