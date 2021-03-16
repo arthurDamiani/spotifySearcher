@@ -41,20 +41,20 @@ const MiddleInfoContainer = styled.div`
     }
 `
 
-function AlbumBox({name, artistName, image, link, totalTracks}) {
+function ContentBox(props) {
     return (
         <Box>
-            <Image src={image} />
+            <Image src={props.image} />
             <InfoContainer>
-                <Title>{name}</Title>
+                <Title>{props.name}</Title>
                 <MiddleInfoContainer>
-                    <p style={{marginRight: '1rem'}}>Artista: {artistName}</p>
-                    <p>Número de faixas: {totalTracks}</p>
+                    {props.artistName && <p style={{marginRight: '1rem'}}>Artista: {props.artistName}</p>}
+                    {props.totalTracks && <p>Número de faixas: {props.totalTracks}</p>}
                 </MiddleInfoContainer>
-                <a href={link}>Para acessar esse álbum no spotify clique aqui!</a>
+                <a href={props.link}>Para acessar esse álbum no spotify clique aqui!</a>
             </InfoContainer>
         </Box>
     )
 }
 
-export default AlbumBox
+export default ContentBox

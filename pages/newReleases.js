@@ -1,8 +1,9 @@
 import {useState, useEffect} from 'react'
 import styled from 'styled-components'
+import {useRouter} from 'next/router'
 import {SpotifyAuthListener} from 'react-spotify-auth'
 import api from './api/api'
-import AlbumBox from '../src/components/AlbumBox'
+import ContentBox from '../src/components/ContentBox'
 import Cookies from 'js-cookie'
 
 const HeaderContainer = styled.header`
@@ -37,6 +38,7 @@ const ContentContainer = styled.div`
 `
 
 function NewReleases() {
+    const router = useRouter()
     const token = Cookies.get('spotifyAuthToken')
     const [results, setResults] = useState([])
 
@@ -49,7 +51,7 @@ function NewReleases() {
                     setResults(res.data.albums.items)
                     localStorage.setItem('token', token)
                 })
-                .catch(() => alert('Erro na requisição!'))
+                .catch(() => router.reload)
         }
         getNewRealeases()
     }, [])
@@ -64,7 +66,7 @@ function NewReleases() {
                 <SpotifyAuthListener />
                 {results.map((result, index) => {
                     return (
-                        <AlbumBox 
+                        <ContentBox 
                             key={index}
                             name={result.name}
                             artistName={result.artists[0].name}

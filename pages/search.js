@@ -3,7 +3,7 @@ import {useRouter} from 'next/router'
 import Cookies from 'js-cookie'
 import {SpotifyAuthListener} from 'react-spotify-auth'
 import api from './api/api'
-import AlbumBox from '../src/components/AlbumBox'
+import ContentBox from '../src/components/ContentBox'
 
 function Search() {
     const router = useRouter()
@@ -56,10 +56,9 @@ function Search() {
     return (
         <div>
             <SpotifyAuthListener/>
-            {searched ? <button onClick={() => router.reload()}>Pesquisar novamente</button> :
             <form onSubmit={search}>
                 <input value={query} onChange={(e) => setQuery(e.target.value)} />
-                <select name='type' onChange={(e) => setType(e.target.value)} >
+                <select name='type' disabled={searched} onChange={(e) => setType(e.target.value)} >
                     <option value="" defaultValue>O que você procura?</option>
                     <option value='artist'>Artista</option>
                     <option value='album'>Albúm</option>
@@ -69,12 +68,13 @@ function Search() {
                     <option value='episode'>Ep</option>
                 </select>
                 <button type='submit'>Pesquisar</button>
-            </form>}
+                {searched && <button onClick={() => router.reload()}>Pesquisar outra categoria</button>}
+            </form>
             {results.map((result, index) => {
                 switch(type) {
                     case 'artist':
                         return (
-                            <AlbumBox 
+                            <ContentBox 
                                 key={index}
                                 name={result.name}
                                 link={result.external_urls.spotify}
@@ -82,7 +82,7 @@ function Search() {
                         )
                     case 'album':
                         return (
-                            <AlbumBox 
+                            <ContentBox 
                                 key={index}
                                 name={result.name}
                                 artistName={result.artists[0].name}
@@ -93,7 +93,7 @@ function Search() {
                         )
                     case 'playlist':
                         return (
-                            <AlbumBox 
+                            <ContentBox 
                                 key={index}
                                 name={result.name}
                                 image={result.images[0].url}
@@ -102,7 +102,7 @@ function Search() {
                         )
                     case 'track':
                         return (
-                            <AlbumBox 
+                            <ContentBox 
                                 key={index}
                                 name={result.name}
                                 artistName={result.artists[0].name}
@@ -113,7 +113,7 @@ function Search() {
                         )
                     case 'show':
                         return (
-                            <AlbumBox 
+                            <ContentBox 
                                 key={index}
                                 name={result.name}
                                 artistName={result.publisher}
@@ -124,7 +124,7 @@ function Search() {
                         )
                     case 'episode':
                         return (
-                            <AlbumBox 
+                            <ContentBox 
                                 key={index}
                                 name={result.name}
                                 image={result.images[0].url}
@@ -134,7 +134,7 @@ function Search() {
                         )
                     default:
                         return (
-                            <AlbumBox 
+                            <ContentBox 
                                 key={index}
                                 name={result.name}
                                 artistName={result.artists[0].name}
