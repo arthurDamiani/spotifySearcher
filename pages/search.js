@@ -1,10 +1,20 @@
 import {useState} from 'react'
 import {useRouter} from 'next/router'
+import styled from 'styled-components'
 import Cookies from 'js-cookie'
 import {SpotifyAuthListener} from 'react-spotify-auth'
 import api from './api/api'
 import ResultGrid from '../src/components/ResultGrid'
 import ContentBox from '../src/components/ContentBox'
+
+const FormContainer = styled.form`
+    background-color: ${({ theme }) => theme.colors.primary};
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem 0;
+`
 
 function Search() {
     const router = useRouter()
@@ -17,13 +27,13 @@ function Search() {
     async function search(e) {
         e.preventDefault()
         api.defaults.headers.common['Authorization'] = 'Bearer ' + token
-        setQuery(query.replaceAll(' ', '%20'))
-        await api.get(`/v1/search?q=${query}&type=${type}`)
+        const queryFormated =  query.replaceAll(' ', '%20')
+        await api.get(`/v1/search?q=${queryFormated}&type=${type}`)
             .then((res) => {
                 switch(type) {
                     case 'artist':
                         setResults(res.data.artists.items)
-                        console.log(res.data.artists.items[0].images[0].url)
+                        console.log(res.data.artists.items)
                         break
                     case 'album':
                         setResults(res.data.albums.items)
@@ -50,16 +60,16 @@ function Search() {
                         break
                 }
             })
-            setSearched(true)
+        setSearched(true)
     }
 
     return (
         <div>
             <SpotifyAuthListener/>
-            <form onSubmit={search}>
-                <input value={query} onChange={(e) => setQuery(e.target.value)} />
+            <FormContainer onSubmit={search}>
+                <input placeholder='Digite aqui' value={query} onChange={(e) => setQuery(e.target.value)} />
                 <select name='type' disabled={searched} onChange={(e) => setType(e.target.value)} >
-                    <option value="" defaultValue>O que você procura?</option>
+                    <option value="" defaultValue>--Selecione a categoria--</option>
                     <option value='artist'>Artista</option>
                     <option value='album'>Albúm</option>
                     <option value='playlist'>Playlist</option>
@@ -69,7 +79,7 @@ function Search() {
                 </select>
                 <button type='submit'>Pesquisar</button>
                 {searched && <button onClick={() => router.reload()}>Pesquisar outra categoria</button>}
-            </form>
+            </FormContainer>
 
             <ResultGrid>
                 {results.map((result, index) => {
