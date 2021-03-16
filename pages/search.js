@@ -1,14 +1,17 @@
 import {useState} from 'react'
+import {useRouter} from 'next/router'
 import Cookies from 'js-cookie'
 import {SpotifyAuthListener} from 'react-spotify-auth'
 import api from './api/api'
 import AlbumBox from '../src/components/AlbumBox'
 
 function Search() {
+    const router = useRouter()
     const token = Cookies.get('spotifyAuthToken')
     const [query, setQuery] = useState('')
     const [type, setType] = useState('')
     const [results, setResults] = useState([])
+    const [searched, setSearched] = useState(false)
 
     async function search(e) {
         e.preventDefault()
@@ -45,6 +48,7 @@ function Search() {
                         setResults(res.data.artists.items)
                         break
                 }
+                setSearched(true)
             })
             .catch(() => alert('Erro na requisição!'))
     }
@@ -52,6 +56,7 @@ function Search() {
     return (
         <div>
             <SpotifyAuthListener/>
+            {searched ? <button onClick={() => router.reload()}>Pesquisar novamente</button> :
             <form onSubmit={search}>
                 <input value={query} onChange={(e) => setQuery(e.target.value)} />
                 <select name='type' onChange={(e) => setType(e.target.value)} >
@@ -64,7 +69,7 @@ function Search() {
                     <option value='episode'>Ep</option>
                 </select>
                 <button type='submit'>Pesquisar</button>
-            </form>
+            </form>}
             {results.map((result, index) => {
                 switch(type) {
                     case 'artist':

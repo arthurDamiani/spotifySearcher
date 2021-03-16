@@ -6,6 +6,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
+
+  button, a {
+    cursor: pointer;
+  }
 `
 
 const theme = {

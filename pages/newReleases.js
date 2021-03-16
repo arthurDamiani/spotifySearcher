@@ -5,9 +5,24 @@ import api from './api/api'
 import AlbumBox from '../src/components/AlbumBox'
 import Cookies from 'js-cookie'
 
+const HeaderContainer = styled.header`
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+`
+
 const Title = styled.h1`
     color: ${({ theme }) => theme.colors.black};
     text-align: center;
+`
+
+const NavigationButton = styled.a`
+    padding: 0.5rem;
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.text};
+    border-radius: 8px;
+    text-decoration: none;
 `
 
 const ContentContainer = styled.div`
@@ -41,7 +56,10 @@ function NewReleases() {
 
     return (
         <>
-            <Title>Lançamentos no Spotify!</Title>
+            <HeaderContainer>
+                <Title>Lançamentos no Spotify!</Title>
+                <NavigationButton href='/search'>Pesquisar</NavigationButton>
+            </HeaderContainer>
             <ContentContainer>
                 <SpotifyAuthListener />
                 {results.map((result, index) => {
