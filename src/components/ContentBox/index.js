@@ -44,7 +44,7 @@ const MiddleInfoContainer = styled.div`
 function ContentBox(props) {
     return (
         <Box>
-            <Image src={props.image} />
+            {props.image ? <Image src={props.image} /> : <Title style={{borderRight: '1px solid #000'}}>Artista sem foto</Title>}
             <InfoContainer>
                 <Title>{props.name}</Title>
                 <MiddleInfoContainer>

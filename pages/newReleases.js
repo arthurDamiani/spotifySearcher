@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {useRouter} from 'next/router'
 import {SpotifyAuthListener} from 'react-spotify-auth'
 import api from './api/api'
+import ResultGrid from '../src/components/ResultGrid'
 import ContentBox from '../src/components/ContentBox'
 import Cookies from 'js-cookie'
 
@@ -24,17 +25,6 @@ const NavigationButton = styled.a`
     color: ${({ theme }) => theme.colors.text};
     border-radius: 8px;
     text-decoration: none;
-`
-
-const ContentContainer = styled.div`
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    margin: 1rem;
-
-    @media(max-width: 800px) {
-        grid-template-columns: 100%;
-    }
 `
 
 function NewReleases() {
@@ -62,7 +52,7 @@ function NewReleases() {
                 <Title>Lançamentos no Spotify!</Title>
                 <NavigationButton href='/search'>Pesquisar</NavigationButton>
             </HeaderContainer>
-            <ContentContainer>
+            <ResultGrid>
                 <SpotifyAuthListener />
                 {results.map((result, index) => {
                     return (
@@ -76,7 +66,7 @@ function NewReleases() {
                         />
                     )
                 })}
-            </ContentContainer>
+            </ResultGrid>
         </>
     )
 }

@@ -3,6 +3,7 @@ import {useRouter} from 'next/router'
 import Cookies from 'js-cookie'
 import {SpotifyAuthListener} from 'react-spotify-auth'
 import api from './api/api'
+import ResultGrid from '../src/components/ResultGrid'
 import ContentBox from '../src/components/ContentBox'
 
 function Search() {
@@ -22,7 +23,7 @@ function Search() {
                 switch(type) {
                     case 'artist':
                         setResults(res.data.artists.items)
-                        console.log(res.data.artists.items)
+                        console.log(res.data.artists.items[0].images[0].url)
                         break
                     case 'album':
                         setResults(res.data.albums.items)
@@ -48,9 +49,8 @@ function Search() {
                         setResults(res.data.artists.items)
                         break
                 }
-                setSearched(true)
             })
-            .catch(() => alert('Erro na requisição!'))
+            setSearched(true)
     }
 
     return (
@@ -70,81 +70,96 @@ function Search() {
                 <button type='submit'>Pesquisar</button>
                 {searched && <button onClick={() => router.reload()}>Pesquisar outra categoria</button>}
             </form>
-            {results.map((result, index) => {
-                switch(type) {
-                    case 'artist':
-                        return (
-                            <ContentBox 
-                                key={index}
-                                name={result.name}
-                                link={result.external_urls.spotify}
-                            />
-                        )
-                    case 'album':
-                        return (
-                            <ContentBox 
-                                key={index}
-                                name={result.name}
-                                artistName={result.artists[0].name}
-                                image={result.images[0].url}
-                                link={result.external_urls.spotify}
-                                totalTracks={result.total_tracks}
-                            />
-                        )
-                    case 'playlist':
-                        return (
-                            <ContentBox 
-                                key={index}
-                                name={result.name}
-                                image={result.images[0].url}
-                                link={result.external_urls.spotify}
-                            />
-                        )
-                    case 'track':
-                        return (
-                            <ContentBox 
-                                key={index}
-                                name={result.name}
-                                artistName={result.artists[0].name}
-                                image={result.album.images[0].url}
-                                link={result.external_urls.spotify}
-                                totalTracks={result.total_tracks}
-                            />
-                        )
-                    case 'show':
-                        return (
-                            <ContentBox 
-                                key={index}
-                                name={result.name}
-                                artistName={result.publisher}
-                                image={result.images[0].url}
-                                link={result.external_urls.spotify}
-                                totalTracks={result.total_episodes}
-                            />
-                        )
-                    case 'episode':
-                        return (
-                            <ContentBox 
-                                key={index}
-                                name={result.name}
-                                image={result.images[0].url}
-                                link={result.external_urls.spotify}
-                                totalTracks={result.total_tracks}
-                            />
-                        )
-                    default:
-                        return (
-                            <ContentBox 
-                                key={index}
-                                name={result.name}
-                                artistName={result.artists[0].name}
-                                image={result.album.images[0].url}
-                                link={result.external_urls.spotify}
-                                totalTracks={result.total_tracks}
-                            />
-                        )
-                }
-            })}
+
+            <ResultGrid>
+                {results.map((result, index) => {
+                    switch(type) {
+                        case 'artist':
+                            const iamgeList = result.images
+                            if(iamgeList.length === 0) {
+                                return (
+                                    <ContentBox 
+                                        key={index}
+                                        name={result.name}
+                                        link={result.external_urls.spotify}
+                                    />
+                                )
+                            } else {
+                                return (
+                                    <ContentBox 
+                                        key={index}
+                                        name={result.name}
+                                        image={iamgeList[0].url}
+                                        link={result.external_urls.spotify}
+                                    />
+                                )
+                            }
+                        case 'album':
+                            return (
+                                <ContentBox 
+                                    key={index}
+                                    name={result.name}
+                                    artistName={result.artists[0].name}
+                                    image={result.images[0].url}
+                                    link={result.external_urls.spotify}
+                                    totalTracks={result.total_tracks}
+                                />
+                            )
+                        case 'playlist':
+                            return (
+                                <ContentBox 
+                                    key={index}
+                                    name={result.name}
+                                    image={result.images[0].url}
+                                    link={result.external_urls.spotify}
+                                />
+                            )
+                        case 'track':
+                            return (
+                                <ContentBox 
+                                    key={index}
+                                    name={result.name}
+                                    artistName={result.artists[0].name}
+                                    image={result.album.images[0].url}
+                                    link={result.external_urls.spotify}
+                                    totalTracks={result.total_tracks}
+                                />
+                            )
+                        case 'show':
+                            return (
+                                <ContentBox 
+                                    key={index}
+                                    name={result.name}
+                                    artistName={result.publisher}
+                                    image={result.images[0].url}
+                                    link={result.external_urls.spotify}
+                                    totalTracks={result.total_episodes}
+                                />
+                            )
+                        case 'episode':
+                            return (
+                                <ContentBox 
+                                    key={index}
+                                    name={result.name}
+                                    image={result.images[0].url}
+                                    link={result.external_urls.spotify}
+                                    totalTracks={result.total_tracks}
+                                />
+                            )
+                        default:
+                            return (
+                                <ContentBox 
+                                    key={index}
+                                    name={result.name}
+                                    artistName={result.artists[0].name}
+                                    image={result.album.images[0].url}
+                                    link={result.external_urls.spotify}
+                                    totalTracks={result.total_tracks}
+                                />
+                            )
+                    }
+                })}
+            </ResultGrid>
         </div>
     )
 }
