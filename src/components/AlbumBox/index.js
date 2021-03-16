@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Box = styled.div`
-    background-color: #f5f5f5;
+    background-color: #f0f0f0;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
@@ -34,9 +34,11 @@ const InfoContainer = styled.div`
 `
 
 const MiddleInfoContainer = styled.div`
-    width: 80%;
     display: flex;
-    justify-content: space-between;
+
+    @media(max-width: 1040px) {
+        flex-direction: column;
+    }
 `
 
 function AlbumBox({name, artistName, image, link, totalTracks}) {
@@ -46,7 +48,7 @@ function AlbumBox({name, artistName, image, link, totalTracks}) {
             <InfoContainer>
                 <Title>{name}</Title>
                 <MiddleInfoContainer>
-                    <p>Artista: {artistName}</p>
+                    <p style={{marginRight: '1rem'}}>Artista: {artistName}</p>
                     <p>Número de faixas: {totalTracks}</p>
                 </MiddleInfoContainer>
                 <a href={link}>Para acessar esse álbum no spotify clique aqui!</a>

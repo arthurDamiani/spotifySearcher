@@ -5,11 +5,20 @@ import api from './api/api'
 import AlbumBox from '../src/components/AlbumBox'
 import Cookies from 'js-cookie'
 
+const Title = styled.h1`
+    color: ${({ theme }) => theme.colors.black};
+    text-align: center;
+`
+
 const ContentContainer = styled.div`
     height: 100vh;
     display: grid;
     grid-template-columns: 50% 50%;
     margin: 1rem;
+
+    @media(max-width: 800px) {
+        grid-template-columns: 100%;
+    }
 `
 
 function NewReleases() {
@@ -31,21 +40,24 @@ function NewReleases() {
     }, [])
 
     return (
-        <ContentContainer>
-            <SpotifyAuthListener />
-            {results.map((result, index) => {
-                return (
-                    <AlbumBox 
-                        key={index}
-                        name={result.name}
-                        artistName={result.artists[0].name}
-                        image={result.images[0].url}
-                        link={result.external_urls.spotify}
-                        totalTracks={result.total_tracks}
-                    />
-                )
-            })}
-        </ContentContainer>
+        <>
+            <Title>Lançamentos no Spotify!</Title>
+            <ContentContainer>
+                <SpotifyAuthListener />
+                {results.map((result, index) => {
+                    return (
+                        <AlbumBox 
+                            key={index}
+                            name={result.name}
+                            artistName={result.artists[0].name}
+                            image={result.images[0].url}
+                            link={result.external_urls.spotify}
+                            totalTracks={result.total_tracks}
+                        />
+                    )
+                })}
+            </ContentContainer>
+        </>
     )
 }
 
