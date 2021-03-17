@@ -59,7 +59,7 @@ function ContentBox(props) {
                     {props.artistName && <p style={{marginRight: '1rem'}}>Artista: {props.artistName}</p>}
                     {props.totalTracks && <p>Número de faixas: {props.totalTracks}</p>}
                 </MiddleInfoContainer>
-                <a href={props.link}>Para acessar esse álbum no spotify clique aqui!</a>
+                <a href={props.link}>Para acessar esse conteúdo no spotify clique aqui!</a>
             </InfoContainer>
         </Box>
     )
