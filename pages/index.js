@@ -21,7 +21,7 @@ export default function Home() {
     <Center>
       <Title>Acesse sua conta no Spotify para acessar o site</Title>
       <SpotifyAuth 
-        redirectUri='http://localhost:3000/newReleases'
+        redirectUri='https://spotify-searcher.vercel.app/newReleases'
         clientID='9af444e6d96e4c69b00c1652503c083a'
         scopes={[Scopes.userReadPrivate, Scopes.userReadEmail]}
       />
