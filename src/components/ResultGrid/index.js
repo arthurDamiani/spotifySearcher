@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
 const ResultGrid = styled.div`
-    height: 100vh;
+    background-color: ${({ theme }) => theme.colors.black};
+    width: 100%;
     display: grid;
     grid-template-columns: 50% 50%;
-    margin: 1rem;
 
     @media(max-width: 800px) {
         grid-template-columns: 100%;

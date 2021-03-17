@@ -8,6 +8,7 @@ import ContentBox from '../src/components/ContentBox'
 import Cookies from 'js-cookie'
 
 const HeaderContainer = styled.header`
+    background-color: ${({ theme }) => theme.colors.primary};
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -15,14 +16,14 @@ const HeaderContainer = styled.header`
 `
 
 const Title = styled.h1`
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.text};
     text-align: center;
 `
 
 const NavigationButton = styled.a`
     padding: 0.5rem;
-    background-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.text};
+    background-color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.primary};
     border-radius: 8px;
     text-decoration: none;
 `
@@ -41,7 +42,7 @@ function NewReleases() {
                     setResults(res.data.albums.items)
                     localStorage.setItem('token', token)
                 })
-                .catch(() => router.reload)
+                .catch(() => router.reload())
         }
         getNewRealeases()
     }, [])

@@ -4,8 +4,7 @@ const Box = styled.div`
     background-color: #f0f0f0;
     padding: 1rem;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     border-radius: 8px;
     margin: 1rem;
     transition: all ease 0.3s;
@@ -18,6 +17,15 @@ const Box = styled.div`
 const Image = styled.img`
     width: auto;
     height: 10rem;
+`
+
+const NoImage = styled.p`
+    background-color: ${({ theme }) => theme.colors.black};
+    width: 12rem;
+    font-size: 2rem;
+    text-align: center;
+    color: ${({ theme }) => theme.colors.text};
+    padding: 2rem;
 `
 
 const Title = styled.h2`
@@ -44,7 +52,7 @@ const MiddleInfoContainer = styled.div`
 function ContentBox(props) {
     return (
         <Box>
-            {props.image ? <Image src={props.image} /> : <Title style={{borderRight: '1px solid #000'}}>Artista sem foto</Title>}
+            {props.image ? <Image src={props.image} /> : <NoImage>Artista sem foto</NoImage>}
             <InfoContainer>
                 <Title>{props.name}</Title>
                 <MiddleInfoContainer>
