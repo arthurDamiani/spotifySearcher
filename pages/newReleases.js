@@ -5,6 +5,7 @@ import {SpotifyAuthListener} from 'react-spotify-auth'
 import api from './api/api'
 import ResultGrid from '../src/components/ResultGrid'
 import ContentBox from '../src/components/ContentBox'
+import Background from '../src/components/Background'
 import Cookies from 'js-cookie'
 
 const HeaderContainer = styled.header`
@@ -53,21 +54,23 @@ function NewReleases() {
                 <Title>Lançamentos no Spotify!</Title>
                 <NavigationButton href='/search'>Pesquisar</NavigationButton>
             </HeaderContainer>
-            <ResultGrid>
-                <SpotifyAuthListener />
-                {results.map((result, index) => {
-                    return (
-                        <ContentBox 
-                            key={index}
-                            name={result.name}
-                            artistName={result.artists[0].name}
-                            image={result.images[0].url}
-                            link={result.external_urls.spotify}
-                            totalTracks={result.total_tracks}
-                        />
-                    )
-                })}
-            </ResultGrid>
+            <Background>
+                <ResultGrid>
+                    <SpotifyAuthListener />
+                    {results.map((result, index) => {
+                        return (
+                            <ContentBox 
+                                key={index}
+                                name={result.name}
+                                artistName={result.artists[0].name}
+                                image={result.images[0].url}
+                                link={result.external_urls.spotify}
+                                totalTracks={result.total_tracks}
+                            />
+                        )
+                    })}
+                </ResultGrid>
+            </Background>
         </>
     )
 }

@@ -14,6 +14,7 @@ const Center = styled.div`
 
 const Title = styled.h1`
   color: ${({ theme }) => theme.colors.text};
+  text-align: center;
 `
 
 export default function Home() {

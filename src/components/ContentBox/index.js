@@ -12,6 +12,10 @@ const Box = styled.div`
     &:hover {
         transform: scale(1.05);
     }
+
+    @media(max-width: 560px) {
+        flex-direction: column;
+    }
 `
 
 const Image = styled.img`
@@ -39,6 +43,10 @@ const InfoContainer = styled.div`
     justify-content: center;
     align-items: flex-start;
     margin-left: 1rem;
+
+    @media(max-width: 560px) {
+        align-items: center;
+    }
 `
 
 const MiddleInfoContainer = styled.div`

@@ -4,14 +4,9 @@ import styled from 'styled-components'
 import Cookies from 'js-cookie'
 import {SpotifyAuthListener} from 'react-spotify-auth'
 import api from './api/api'
+import Background from '../src/components/Background'
 import ResultGrid from '../src/components/ResultGrid'
 import ContentBox from '../src/components/ContentBox'
-
-const Background = styled.div`
-    width: 100%;
-    height: 100vh;
-    background-color: ${({ theme }) => theme.colors.black};
-`
 
 const FormContainer = styled.form`
     background-color: ${({ theme }) => theme.colors.primary};
@@ -20,6 +15,28 @@ const FormContainer = styled.form`
     justify-content: space-around;
     align-items: center;
     padding: 2rem 0;
+
+    @media(max-width: 700px) {
+        flex-direction: column;
+    }
+`
+
+const InputContainer = styled.div`
+    @media(max-width: 700px) {
+        display: flex;
+        margin-top: 1rem;
+    }
+
+    @media(max-width: 400px) {
+        flex-direction: column;
+    }
+`
+
+const ButtonsContainer = styled.div`
+    @media(max-width: 700px) {
+        display: flex;
+        margin-top: 1rem;
+    }
 `
 
 const HeaderButton = styled.button`
@@ -31,10 +48,23 @@ const HeaderButton = styled.button`
     text-decoration: none;
 `
 
+const Text = styled.h1`
+    color: ${({ theme }) => theme.colors.text};
+    text-align: center;
+    margin: 0;
+    padding: 2rem;
+`
+
 const Input = styled.input`
     border-radius: 8px;
     border: none;
     padding: 0.5rem;
+    margin-right: 1rem;
+
+    @media(max-width: 400px) {
+        margin-bottom: 1rem;
+        margin-right: 0;
+    }
 `
 
 const Select = styled.select`
@@ -93,20 +123,25 @@ function Search() {
         <div>
             <SpotifyAuthListener/>
             <FormContainer onSubmit={search}>
-                <Input placeholder='Digite aqui sua pesquisa' value={query} onChange={(e) => setQuery(e.target.value)} />
-                <Select name='type' disabled={searched} onChange={(e) => setType(e.target.value)} >
-                    <option value="" defaultValue>--Selecione a categoria--</option>
-                    <option value='artist'>Artista</option>
-                    <option value='album'>Albúm</option>
-                    <option value='playlist'>Playlist</option>
-                    <option value='track'>Música</option>
-                    <option value='show'>Show</option>
-                    <option value='episode'>Ep</option>
-                </Select>
-                <HeaderButton type='submit'>Pesquisar</HeaderButton>
-                {searched && <HeaderButton onClick={() => router.reload()}>Pesquisar outra categoria</HeaderButton>}
+                <InputContainer>
+                    <Input placeholder='Digite aqui sua pesquisa' value={query} onChange={(e) => setQuery(e.target.value)} />
+                    <Select name='type' disabled={searched} onChange={(e) => setType(e.target.value)} >
+                        <option value="" defaultValue>--Selecione a categoria--</option>
+                        <option value='artist'>Artista</option>
+                        <option value='album'>Albúm</option>
+                        <option value='playlist'>Playlist</option>
+                        <option value='track'>Música</option>
+                        <option value='show'>Show</option>
+                        <option value='episode'>Ep</option>
+                    </Select>
+                </InputContainer>
+                <ButtonsContainer>
+                    <HeaderButton type='submit'>Pesquisar</HeaderButton>
+                    {searched && <HeaderButton style={{marginLeft: '1rem'}} onClick={() => router.reload()}>Pesquisar outra categoria</HeaderButton>}
+                </ButtonsContainer>
             </FormContainer>
             <Background>
+                {results.length === 0 & searched && <Text>Nenhum resultado encontrado para {query} na categoria {type}</Text>}
                 <ResultGrid>
                     {results.map((result, index) => {
                         switch(type) {
